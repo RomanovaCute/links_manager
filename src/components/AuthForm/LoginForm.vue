@@ -33,7 +33,7 @@
     </div>
     <span class="cursor-pointer mb-3 block" @click="emits('resetPassword')">Забыли пароль?</span>
     <div class="grid grid-cols-2 gap-3">
-      <Button type="submit" class="w-full" label="Вход" />
+      <Button type="submit" class="w-full" label="Вход" :loading="loading" />
       <Button type="submit" icon="pi pi-github" class="w-full" label="GitHub" severity="contrast" />
     </div>
   </Form>
@@ -46,7 +46,12 @@ import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'
 import { z } from 'zod'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
+import { useToastNofitications } from '@/composables/useToastNotifications.js'
+import { useAuth } from '@/composables/useAuth.js'
 import { Form } from '@primevue/forms'
+
+const { showToast } = useToastNofitications()
+const { signIn, loading, errorMessage } = useAuth()
 
 const emits = defineEmits(['resetPassword'])
 
@@ -63,6 +68,15 @@ const rules = z.object({
 const resolver = ref(zodResolver(rules))
 
 const submitForm = async ({ valid }) => {
-  console.log(valid)
+  if (!valid) return
+
+  try {
+    await signIn({
+      email: formData.value.email,
+      password: formData.value.password,
+    })
+  } catch {
+    showToast('error', 'Ошибка входа', errorMessage.value)
+  }
 }
 </script>
