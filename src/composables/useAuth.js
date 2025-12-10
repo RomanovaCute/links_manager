@@ -4,12 +4,13 @@ import { useRquest } from '@/composables/useRequest.js'
 export function useAuth() {
   const { loading, errorMessage, handleRequest } = useRquest()
 
-  const signUp = async ({ email, password }) => {
+  const signUp = async ({ email, password, firstname }) => {
     return await handleRequest(async () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
       })
+      await supabase.from('users').insert([{ id: data.user.id, firstname, email }])
       if (error) throw error
       return data
     })
