@@ -19,22 +19,8 @@
         {{ $form.email.error.message }}
       </Message>
     </div>
-    <div class="mb-3">
-      <InputText
-        name="password"
-        placeholder="Введите пароль"
-        type="password"
-        v-model="formData.password"
-        class="w-full"
-      />
-      <Message v-if="$form.password?.invalid" severity="error" variant="simple" size="small">
-        {{ $form.password.error.message }}
-      </Message>
-    </div>
-    <span class="cursor-pointer mb-3 block" @click="emits('resetPassword')">Забыли пароль?</span>
     <div class="grid grid-cols-2 gap-3">
-      <Button type="submit" class="w-full" label="Вход" />
-      <Button type="submit" icon="pi pi-github" class="w-full" label="GitHub" severity="contrast" />
+      <Button type="submit" class="w-full" label="Сбросить пароль" />
     </div>
   </Form>
 </template>
@@ -48,16 +34,12 @@ import { z } from 'zod'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 import { Form } from '@primevue/forms'
 
-const emits = defineEmits(['resetPassword'])
-
 const formData = ref({
   email: '',
-  password: '',
 })
 
 const rules = z.object({
   email: z.string().email({ message: 'Некорректный email' }),
-  password: z.string().min(6, { message: ' Должно быть минимум 6 символов' }),
 })
 
 const resolver = ref(zodResolver(rules))
