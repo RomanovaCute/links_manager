@@ -34,7 +34,13 @@
     <span class="cursor-pointer mb-3 block" @click="emits('resetPassword')">Забыли пароль?</span>
     <div class="grid grid-cols-2 gap-3">
       <Button type="submit" class="w-full" label="Вход" :loading="loading" />
-      <Button type="submit" icon="pi pi-github" class="w-full" label="GitHub" severity="contrast" />
+      <Button
+        @click="sighInWithGitHub"
+        icon="pi pi-github"
+        class="w-full"
+        label="GitHub"
+        severity="contrast"
+      />
     </div>
   </Form>
 </template>
@@ -51,7 +57,7 @@ import { useAuth } from '@/composables/useAuth.js'
 import { Form } from '@primevue/forms'
 
 const { showToast } = useToastNofitications()
-const { signIn, loading, errorMessage } = useAuth()
+const { signIn, sighInWithGitHub, loading, errorMessage } = useAuth()
 
 const emits = defineEmits(['resetPassword'])
 
