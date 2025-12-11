@@ -47,7 +47,7 @@
     <div class="grid grid-cols-2 gap-3">
       <Button type="submit" class="w-full" label="Регистрация" :loading="loading" />
       <Button
-        @click="sighInWithGitHub"
+        @click="signInWithGitHub"
         icon="pi pi-github"
         class="w-full"
         label="GitHub"
@@ -70,7 +70,7 @@ import { Form } from '@primevue/forms'
 import Toast from 'primevue/toast'
 
 const { showToast } = useToastNofitications()
-const { signUp, sighInWithGitHub, loading, errorMessage } = useAuth()
+const { signUp, signInWithGitHub, loading, errorMessage } = useAuth()
 
 const formData = ref({
   email: '',

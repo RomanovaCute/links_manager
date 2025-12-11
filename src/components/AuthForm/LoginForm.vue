@@ -35,7 +35,7 @@
     <div class="grid grid-cols-2 gap-3">
       <Button type="submit" class="w-full" label="Вход" :loading="loading" />
       <Button
-        @click="sighInWithGitHub"
+        @click="signInWithGitHub"
         icon="pi pi-github"
         class="w-full"
         label="GitHub"
@@ -59,7 +59,7 @@ import { useUserStore } from '@/stores/userStore'
 import { Form } from '@primevue/forms'
 
 const { showToast } = useToastNofitications()
-const { signIn, sighInWithGitHub, loading, errorMessage } = useAuth()
+const { signIn, signInWithGitHub, loading, errorMessage } = useAuth()
 const router = useRouter()
 const authStore = useUserStore()
 
