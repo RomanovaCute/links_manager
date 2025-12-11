@@ -47,6 +47,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'
@@ -54,10 +55,13 @@ import { z } from 'zod'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 import { useToastNofitications } from '@/composables/useToastNotifications.js'
 import { useAuth } from '@/composables/useAuth.js'
+import { useUserStore } from '@/stores/userStore'
 import { Form } from '@primevue/forms'
 
 const { showToast } = useToastNofitications()
 const { signIn, sighInWithGitHub, loading, errorMessage } = useAuth()
+const router = useRouter()
+const authStore = useUserStore()
 
 const emits = defineEmits(['resetPassword'])
 
@@ -81,6 +85,8 @@ const submitForm = async ({ valid }) => {
       email: formData.value.email,
       password: formData.value.password,
     })
+    await authStore.getUser()
+    router.replace({ name: 'home' })
   } catch {
     showToast('error', 'Ошибка входа', errorMessage.value)
   }

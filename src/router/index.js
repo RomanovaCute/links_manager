@@ -1,5 +1,8 @@
 import HomeView from '@/views/HomeView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { supabase } from '@/supabase'
+
+let user = null
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +11,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/auth',
@@ -20,6 +24,23 @@ const router = createRouter({
       component: () => import('../views/ResetPassword.vue'),
     },
   ],
+})
+
+const getUser = async (next) => {
+  user = await supabase.auth.getSession()
+  if (user.data.session === null || user === null) {
+    next({ name: 'auth' })
+  } else {
+    next()
+  }
+}
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresAuth) {
+    await getUser(next)
+  } else {
+    next()
+  }
 })
 
 export default router
