@@ -1,4 +1,5 @@
 <template>
+  <CategoriesModal v-model="categoriesDialogVisible" />
   <div class="mb-5">
     <Menubar>
       <template #start>
@@ -6,7 +7,7 @@
           <span class="font-bold">Link Manager</span>
           <div class="flex items-center gap-2">
             <Button icon="pi pi-link" rounded />
-            <Button icon="pi pi-folder" rounded />
+            <Button icon="pi pi-folder" rounded @click="categoriesDialogVisible = true" />
           </div>
         </div>
       </template>
@@ -21,11 +22,12 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import Avatar from 'primevue/avatar'
 import Menubar from 'primevue/menubar'
+import CategoriesModal from '@/components/Modals/CategoriesModal.vue'
 
 import { useToastNofitications } from '@/composables/useToastNotifications.js'
 import { useUserStore } from '@/stores/userStore.js'
@@ -35,6 +37,8 @@ const { showToast } = useToastNofitications()
 const authStore = useUserStore()
 const router = useRouter()
 const { signOut, errorMessage } = useAuth()
+
+const categoriesDialogVisible = ref(false)
 
 const signOutUser = async () => {
   try {
