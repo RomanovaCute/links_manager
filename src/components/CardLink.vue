@@ -1,9 +1,15 @@
 <template>
-  <Card class="relative">
+  <Card class="relative" :style="{ backgroundColor: isFavoriteBgCard }">
     <template #title>
       <div class="flex items-center gap-2 pr-10">
         <img :src="link.preview_image" :alt="link.name" />
-        <a :href="link.url" target="_blank">{{ link.name }}</a>
+        <a :href="link.url" target="_blank" @click="openLink">{{ link.name }}</a>
+        <SpeedDial
+          :model="itemsMenuButton"
+          :tooltipOptions="{ position: 'left' }"
+          direction="down"
+          style="position: absolute; right: 20px; top: 20px"
+        />
       </div>
     </template>
     <template #content>
@@ -16,11 +22,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Card from 'primevue/card'
+import SpeedDial from 'primevue/speeddial'
 import { useLinksStore } from '@/stores/linksStore'
+import { useToastNotifications } from '@/composables/useToastNotifications'
 
 const linksStore = useLinksStore()
+const { showToast } = useToastNotifications()
+
+const itemsMenuButton = ref([
+  {
+    label: 'Избранное',
+    icon: 'pi pi-star',
+    command: async () => {
+      try {
+        await linksStore.changeIsFavorite(props.link.id)
+        showToast('success', 'Успешно', 'Изменения сохранены')
+      } catch {
+        showToast('error', 'Ошибка')
+      }
+    },
+  },
+  {
+    label: 'Скопировать',
+    icon: 'pi pi-link',
+    command: () => {
+      copyToClipboard()
+    },
+  },
+  {
+    label: 'Редактировать',
+    icon: 'pi pi-pencil',
+    command: () => {
+      console.log('edit')
+    },
+  },
+  {
+    label: 'Удалить',
+    icon: 'pi pi-trash',
+    command: async () => {
+      try {
+        await linksStore.removeLink(props.link.id)
+        showToast('success', 'Успешно', 'Ссылка удалена')
+      } catch {
+        showToast('error', 'Ошибка')
+      }
+    },
+  },
+])
 
 const props = defineProps({
   link: {
@@ -28,4 +78,21 @@ const props = defineProps({
     required: true,
   },
 })
+
+const isFavoriteBgCard = computed(() => {
+  return props.link.is_favorite ? 'var(--p-button-outlined-warn-hover-background' : ''
+})
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(props.link.url)
+    showToast('success', 'Успешно', `Скопировано ${props.link.name}`)
+  } catch {
+    showToast('error', 'Ошибка при копировании')
+  }
+}
+
+const openLink = () => {
+  linksStore.addClickCount(props.link.id)
+}
 </script>

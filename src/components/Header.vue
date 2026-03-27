@@ -5,7 +5,7 @@
     <Menubar>
       <template #start>
         <div class="flex items-center gap-2">
-          <span class="font-bold">Link Manager</span>
+          <span class="font-bold">Менеджер ссылок</span>
           <div class="flex items-center gap-2">
             <Button icon="pi pi-link" rounded @click="createLinkDialogVisible = true" />
             <Button icon="pi pi-folder" rounded @click="categoriesDialogVisible = true" />
