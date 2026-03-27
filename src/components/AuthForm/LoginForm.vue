@@ -53,12 +53,12 @@ import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'
 import { z } from 'zod'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
-import { useToastNofitications } from '@/composables/useToastNotifications.js'
+import { useToastNotifications } from '@/composables/useToastNotifications.js'
 import { useAuth } from '@/composables/useAuth.js'
 import { useUserStore } from '@/stores/userStore'
 import { Form } from '@primevue/forms'
 
-const { showToast } = useToastNofitications()
+const { showToast } = useToastNotifications()
 const { signIn, signInWithGitHub, loading, errorMessage } = useAuth()
 const router = useRouter()
 const authStore = useUserStore()

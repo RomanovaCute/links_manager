@@ -31,11 +31,11 @@ import Menubar from 'primevue/menubar'
 import CategoriesModal from '@/components/Modals/CategoriesModal.vue'
 import CreateLinkModal from '@/components/Modals/CreateLinkModal.vue'
 
-import { useToastNofitications } from '@/composables/useToastNotifications.js'
+import { useToastNotifications } from '@/composables/useToastNotifications.js'
 import { useUserStore } from '@/stores/userStore.js'
 import { useAuth } from '@/composables/useAuth.js'
 
-const { showToast } = useToastNofitications()
+const { showToast } = useToastNotifications()
 const authStore = useUserStore()
 const router = useRouter()
 const { signOut, errorMessage } = useAuth()

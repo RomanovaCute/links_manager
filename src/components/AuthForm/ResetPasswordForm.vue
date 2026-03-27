@@ -32,11 +32,11 @@ import InputText from 'primevue/inputtext'
 import Message from 'primevue/message'
 import { z } from 'zod'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
-import { useToastNofitications } from '@/composables/useToastNotifications.js'
+import { useToastNotifications } from '@/composables/useToastNotifications.js'
 import { useAuth } from '@/composables/useAuth.js'
 import { Form } from '@primevue/forms'
 
-const { showToast } = useToastNofitications()
+const { showToast } = useToastNotifications()
 const { resetPassword, loading, errorMessage } = useAuth()
 
 const email = ref('')
