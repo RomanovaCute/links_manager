@@ -21,6 +21,13 @@ app.use(PrimeVue, {
       darkModeSelector: '.fake-dark-selector',
     },
   },
+  pt: {
+    toast: {
+      root: {
+        style: 'max-width: calc(100vw - 40px)',
+      },
+    },
+  },
 })
 app.use(ToastService)
 
