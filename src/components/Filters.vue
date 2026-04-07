@@ -1,7 +1,13 @@
 <template>
   <div class="md:flex gap-5 justify-center block">
     <div class="mb-3 flex items-center gap-2">
-      <Checkbox inputId="sortByPopular" name="sortByPopular" binary />
+      <Checkbox
+        v-model="linksStore.sortByPopular"
+        inputId="sortByPopular"
+        name="sortByPopular"
+        binary
+        @change="updateFilters"
+      />
       <label for="sortByPopular">Сначала популярные</label>
     </div>
     <div class="mb-3 flex items-center gap-2">
