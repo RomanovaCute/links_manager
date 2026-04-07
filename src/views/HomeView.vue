@@ -5,6 +5,7 @@
       Вы пока ещё не добавили ссылок
     </h2>
     <template v-else>
+      <Filters />
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <CardLink v-for="link in linksStore.links" :key="link.id" :link="link" />
       </div>
@@ -17,6 +18,7 @@ import { onMounted } from 'vue'
 import { useLinksStore } from '@/stores/linksStore'
 import Loader from '@/components/Loader.vue'
 import CardLink from '@/components/CardLink.vue'
+import Filters from '@/components/Filters.vue'
 
 const linksStore = useLinksStore()
 

@@ -1,4 +1,5 @@
 <template>
+  <Toast />
   <Header v-if="authStore.user" />
   <RouterView />
 </template>
@@ -8,6 +9,7 @@ import { onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { RouterView } from 'vue-router'
 import Header from '@/components/Header.vue'
+import Toast from 'primevue/toast'
 
 const authStore = useUserStore()
 
